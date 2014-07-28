@@ -1,10 +1,10 @@
 import flame
-import laff
+from laff.matvec.trsv import trsv
 
 from numpy import transpose
 
 def trsm_rltu(L, B):
-    
+
     BT, \
     BB  = flame.part_2x1(B, \
                          0, 'TOP')
@@ -22,7 +22,7 @@ def trsm_rltu(L, B):
         #TODO: Fix trsv.py to handle rows properly
         #Sorry for the hackiness in the fix here, I got pressed for time
         laff.trsv( 'Lower triangular', 'No transpose', 'Unit diagonal', L, transpose( b1t ) )
-        
+
         #------------------------------------------------------------#
 
         BT, \

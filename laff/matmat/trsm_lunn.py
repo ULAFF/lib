@@ -1,5 +1,5 @@
 import flame
-import laff
+from laff.matvec.trsv import trsv
 
 def trsm_lunn(U, B):
 
@@ -13,7 +13,7 @@ def trsm_lunn(U, B):
 
         #------------------------------------------------------------#
 
-        laff.trsv('Upper triangular', 'No transpose', 'Nonunit diagonal', U, b1)
+        trsv('Upper triangular', 'No transpose', 'Nonunit diagonal', U, b1)
 
         #------------------------------------------------------------#
 

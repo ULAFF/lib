@@ -3,15 +3,20 @@ from numpy import shape
 from numpy import transpose
 from laff.matmat.trsm_llnn import trsm_llnn
 from laff.matmat.trsm_llnu import trsm_llnu
+from laff.matmat.trsm_lltn import trsm_lltn
+from laff.matmat.trsm_lltu import trsm_lltu
 from laff.matmat.trsm_lunn import trsm_lunn
 from laff.matmat.trsm_lunu import trsm_lunu
+from laff.matmat.trsm_lutn import trsm_lutn
+from laff.matmat.trsm_lutu import trsm_lutu
 from laff.matmat.trsm_rlnn import trsm_rlnn
 from laff.matmat.trsm_rlnu import trsm_rlnu
+from laff.matmat.trsm_rltn import trsm_rltn
+from laff.matmat.trsm_rltu import trsm_rltu
 from laff.matmat.trsm_runn import trsm_runn
 from laff.matmat.trsm_runu import trsm_runu
-import sys
-
-
+from laff.matmat.trsm_rutn import trsm_rutn
+from laff.matmat.trsm_rutu import trsm_rutu
 
 
 def trsm(side, uplo, trans, diag, A, B ):

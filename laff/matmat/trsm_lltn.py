@@ -1,5 +1,5 @@
 import flame
-import laff
+from laff.matvec.trsv import trsv
 
 def trsm_lltn(L, B):
 
@@ -13,7 +13,7 @@ def trsm_lltn(L, B):
 
         #------------------------------------------------------------#
 
-        laff.trsv( 'Lower triangular', 'Transpose', 'Nonunit diagonal', L, b1 )
+        trsv( 'Lower triangular', 'Transpose', 'Nonunit diagonal', L, b1 )
 
         #------------------------------------------------------------#
 

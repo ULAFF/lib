@@ -1,5 +1,5 @@
 import flame
-import laff
+from laff.matvec.trsv import trsv
 
 def trsm_lutu(U, B):
 
@@ -13,7 +13,7 @@ def trsm_lutu(U, B):
 
         #------------------------------------------------------------#
 
-        laff.trsv('Upper triangular', 'Transpose', 'Unit diagonal', U, b1)
+        trsv('Upper triangular', 'Transpose', 'Unit diagonal', U, b1)
 
         #------------------------------------------------------------#
 
