@@ -3,8 +3,8 @@ import laff
 
 from numpy import transpose
 
-def trsm_ltu(L, B):
-
+def trsm_rltn(L, B):
+    
     BT, \
     BB  = flame.part_2x1(B, \
                          0, 'TOP')
@@ -21,8 +21,8 @@ def trsm_ltu(L, B):
 
         #TODO: Fix trsv.py to handle rows properly
         #Sorry for the hackiness in the fix here, I got pressed for time
-        laff.trsv( 'Lower triangular', 'Transpose', 'Unit diagonal', L, transpose( b1t ) )
-
+        laff.trsv( 'Lower triangular', 'No transpose', 'Nonunit diagonal', L, transpose( b1t ) )
+        
         #------------------------------------------------------------#
 
         BT, \

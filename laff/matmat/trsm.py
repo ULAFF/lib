@@ -1,18 +1,26 @@
 from numpy import matrix
 from numpy import shape
 from numpy import transpose
-from laff.matmat.trsm_lnu import trsm_lnu
-from laff.matmat.trsm_utn import trsm_utn
-from laff.matmat.trsm_ltu import trsm_ltu
-from laff.matmat.trsm_unn import trsm_unn
+from laff.matmat.trsm_llnn import trsm_llnn
+from laff.matmat.trsm_llnu import trsm_llnu
+from laff.matmat.trsm_lunn import trsm_lunn
+from laff.matmat.trsm_lunu import trsm_lunu
+from laff.matmat.trsm_rlnn import trsm_rlnn
+from laff.matmat.trsm_rlnu import trsm_rlnu
+from laff.matmat.trsm_runn import trsm_runn
+from laff.matmat.trsm_runu import trsm_runu
 import sys
 
 
 
 
-def trsm(uplo, trans, diag, A, B ):
+def trsm(side, uplo, trans, diag, A, B ):
     """
-    Solve A X = B or trans( A X ) = trans( B ), overwriting B with X
+    Solve one of the following:
+        A   X = B    (side='Left',  trans='No transpose')
+        A^T X = B    (side='Left',  trans='Transpose')
+        X A   = B    (side='Right', trans='No transpose')
+        X A^T = B    (side='Right', trans='Transpose')
 
     Parameter uplo indicates whether to use the lower triangular or
     upper triangular part of A:
@@ -20,12 +28,6 @@ def trsm(uplo, trans, diag, A, B ):
        A is lower triangular
     elif upl == 'Upper triangular':
        A is upper trianglar
-
-    Parameter trans indicates whether to transpose A:
-    if trans == 'No transpose':
-       solve A X = B
-    elif trans == 'Transpose':
-       solve trans( A X ) = trans( B )
 
     Parameter diag indicates whether A has an (implicit) unit diagonal:
     if diag == 'Unit diagonal':
@@ -38,17 +40,19 @@ def trsm(uplo, trans, diag, A, B ):
     """
     Check parameters
     """
-    assert (uplo == 'Lower triangular' or uplo == 'Upper triangular'), "laff.trsv: illegal value for uplo"
+    assert (side == 'Left' or side == 'Right'), "laff.trsm: illegal value for side"
 
-    assert (trans == 'No transpose' or trans == 'Transpose'), "laff.trsv: illegal value for trans"
+    assert (uplo == 'Lower triangular' or uplo == 'Upper triangular'), "laff.trsm: illegal value for uplo"
 
-    assert (diag == 'Nonunit diagonal' or diag == 'Unit diagonal'), "laff.trsv: illegal value for diag"
+    assert (trans == 'No transpose' or trans == 'Transpose'), "laff.trsm: illegal value for trans"
+
+    assert (diag == 'Nonunit diagonal' or diag == 'Unit diagonal'), "laff.trsm: illegal value for diag"
 
     assert type(A) is matrix and len(A.shape) is 2, \
-           "laff.trsv: matrix A must be a 2D numpy.matrix"
+           "laff.trsm: matrix A must be a 2D numpy.matrix"
 
     assert type(B) is matrix and len(B.shape) is 2, \
-           "laff.trsvv: matrix B must be a 2D numpy.matrix"
+           "laff.trsm: matrix B must be a 2D numpy.matrix"
 
     """
     Extract sizes
@@ -56,38 +60,68 @@ def trsm(uplo, trans, diag, A, B ):
     m_A, n_A = A.shape
     m_B, n_B = B.shape
 
-    if 'Lower triangular' == uplo:
+    if 'Left' == side:
 
-        if 'No transpose' == trans:
+        if 'Lower triangular' == uplo:
 
-            if 'Unit diagonal' == diag:
-                trsm_lnu( A, B )
+            if 'No transpose' == trans:
+
+                if 'Nonunit diagonal' == diag:
+                    trsm_llnn( A, B )
+                else:
+                    trsm_llnu( A, B )
             else:
-                print( "laff.trsm: diag == Nonunit diagonal not yet implemented for Lower triangular" )
-                sys.exit( 0 )
-        else:
+                if 'Nonunit diagonal' == diag:
+                    trsm_lltn( A, B )
+                else:
+                    trsm_lltu( A, B )
 
-            if 'Unit diagonal' == diag:
-                trsm_ltu( A, B )
-            else:
-                print( "laff.trsm: trans == Transpose not yet implemented for Lower triangular, nonunit diagonal" )
-                sys.exit( 0 )
+        else: #'Upper triangular' == uplo
 
-    else: #'Upper triangular' == uplo
+            if 'No transpose' == trans:
 
-        if 'No transpose' == trans:
+                if 'Nonunit diagonal' == diag:
+                    trsm_lunn( A, B )
 
-            if 'Unit diagonal' == diag:
-                print( "laff.trsm: trans == No transpose not yet implemented for Upper triangular, unit diagonal" )
-                sys.exit( 0 )
+                else:
+                    trsm_lunu( A, B )
 
             else:
-                trsm_unn( A, B )
 
-        else:
+                if 'Nonunit diagonal' == diag:
+                    trsm_lutn( A, B )
+                else:
+                    trsm_lutu( A, B )
 
-            if 'Unit diagonal' == diag:
-                print( "laff.trsm: diag == Unit diagonal not yet implemented for Upper triangular" )
-                sys.exit( 0 )
+    else: #'Right' == side
+
+        if 'Lower triangular' == uplo:
+
+            if 'No transpose' == trans:
+
+                if 'Nonunit diagonal' == diag:
+                    trsm_rlnn( A, B )
+                else:
+                    trsm_rlnu( A, B )
             else:
-                trsm_utn( A, B )
+                if 'Nonunit diagonal' == diag:
+                    trsm_rltn( A, B )
+                else:
+                    trsm_rltu( A, B )
+
+        else: #'Upper triangular' == uplo
+
+            if 'No transpose' == trans:
+
+                if 'Nonunit diagonal' == diag:
+                    trsm_runn( A, B )
+
+                else:
+                    trsm_runu( A, B )
+
+            else:
+
+                if 'Nonunit diagonal' == diag:
+                    trsm_rutn( A, B )
+                else:
+                    trsm_rutu( A, B )

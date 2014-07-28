@@ -3,7 +3,7 @@ import laff
 
 from numpy import transpose
 
-def trsm_utn(U, B):
+def trsm_rlnu(L, B):
     
     BT, \
     BB  = flame.part_2x1(B, \
@@ -21,7 +21,7 @@ def trsm_utn(U, B):
 
         #TODO: Fix trsv.py to handle rows properly
         #Sorry for the hackiness in the fix here, I got pressed for time
-        laff.trsv( 'Upper triangular', 'Transpose', 'Nonunit diagonal', U, transpose( b1t ) )
+        laff.trsv( 'Lower triangular', 'Transpose', 'Unit diagonal', L, transpose( b1t ) )
         
         #------------------------------------------------------------#
 

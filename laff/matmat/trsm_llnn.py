@@ -1,7 +1,7 @@
 import flame
 import laff
 
-def trsm_lnu(L, B):
+def trsm_llnn(L, B):
 
     BL, BR = flame.part_1x2(B, \
                             0, 'LEFT')
@@ -13,7 +13,7 @@ def trsm_lnu(L, B):
 
         #------------------------------------------------------------#
 
-        laff.trsv( 'Lower triangular', 'No transpose', 'Unit diagonal', L, b1 )
+        laff.trsv( 'Lower triangular', 'No transpose', 'Nonunit diagonal', L, b1 )
 
         #------------------------------------------------------------#
 
