@@ -1,6 +1,6 @@
 import flame
-from laff import scal
-from laff import dots
+from laff.vecvec.scal import scal
+from laff.vecvec.dots import dots
 
 def trsv_unn(U, b):
 

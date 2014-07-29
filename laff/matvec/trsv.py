@@ -1,13 +1,13 @@
 from numpy import matrix
-from numpy import shape 
+from numpy import shape
 from numpy import transpose
-from laff.matvec.trsv_lnn import trsv_lnn 
-from laff.matvec.trsv_lnu import trsv_lnu 
-from laff.matvec.trsv_unn import trsv_unn 
-from laff.matvec.trsv_unu import trsv_unu 
+from laff.matvec.trsv_lnn import trsv_lnn
+from laff.matvec.trsv_lnu import trsv_lnu
+from laff.matvec.trsv_unn import trsv_unn
+from laff.matvec.trsv_unu import trsv_unu
 from laff.matvec.trsv_utn import trsv_utn
 from laff.matvec.trsv_ltu import trsv_ltu
-import sys
+from sys import exit
 
 
 def trsv(uplo, trans, diag, A, b ):
@@ -32,10 +32,10 @@ def trsv(uplo, trans, diag, A, b ):
        A has an implicit unit diagonal
     elif diag == 'Nonunit diagonal':
        Use the entries on the diagonal of A
-       
+
     """
 
-    """ 
+    """
     Check parameters
     """
     assert (uplo == 'Lower triangular' or uplo == 'Upper triangular'), "laff.trsv: illegal value for uplo"
@@ -43,16 +43,16 @@ def trsv(uplo, trans, diag, A, b ):
     assert (trans == 'No transpose' or trans == 'Transpose'), "laff.trsv: illegal value for trans"
 
     assert (diag == 'Nonunit diagonal' or diag == 'Unit diagonal'), "laff.trsv: illegal value for diag"
-        
+
     assert type(A) is matrix and len(A.shape) is 2, \
            "laff.trsv: matrix A must be a 2D numpy.matrix"
 
     assert type(b) is matrix and len(b.shape) is 2, \
            "laff.trsvv: vector b must be a 2D numpy.matrix"
-        
-    """ 
+
+    """
     Extract sizes
-    """           
+    """
     m_A, n_A = A.shape
     m_b, n_b = b.shape
 
@@ -76,7 +76,7 @@ def trsv(uplo, trans, diag, A, b ):
                     trsv_ltu( A, b )
                 else:
                     print( "laff.trsv: trans == Transpose not yet implemented for Lower triangular, Transpose" )
-                    sys.exit( 0 )
+                    exit( 0 )
 
         else:  # 'Upper triangular' == uplo
 
@@ -93,8 +93,8 @@ def trsv(uplo, trans, diag, A, b ):
                         trsv_utn( A, b )
                 else:
                     print( "laff.trsv: trans == Transpose not yet implemented for Upper Triangular with Unit diagonal" )
-                    sys.exit( 0 )
+                    exit( 0 )
 
     else:
         print( "laff.trsv: row b not yet implemented" )
-        sys.exit( 0 )
+        exit( 0 )

@@ -1,6 +1,5 @@
 import flame
-from laff import scal
-from laff import axpy
+from laff.vecvec.dots import dots
 
 def trsv_unu(U, b):
 

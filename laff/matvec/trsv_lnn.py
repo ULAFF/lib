@@ -1,6 +1,6 @@
 import flame
-from laff import scal
-from laff import axpy
+from laff.vecvec.scal import scal
+from laff.vecvec.axpy import axpy
 
 def trsv_lnn(L, b):
 

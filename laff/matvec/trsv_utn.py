@@ -1,6 +1,6 @@
 import flame
-from laff import invscal
-from laff import axpy
+from laff.vecvec.invscal import invscal
+from laff.vecvec.axpy import axpy
 
 def trsv_utn( U, b ):
 
@@ -47,4 +47,3 @@ def trsv_utn( U, b ):
 
     flame.merge_2x1(bT, \
                     bB, b)
-

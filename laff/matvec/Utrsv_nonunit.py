@@ -1,5 +1,6 @@
 import flame
-import laff as laff
+from laff.vecvec.dots import dots
+from laff.vecvec.scal import scal
 
 def Utrsv_notranspose_nonunit(U, b):
 
@@ -27,8 +28,8 @@ def Utrsv_notranspose_nonunit(U, b):
 
         #------------------------------------------------------------#
 
-        laff.dots( -u12t, b2, beta1 )
-        laff.scal( 1/upsilon11, beta1 )
+        dots( -u12t, b2, beta1 )
+        scal( 1/upsilon11, beta1 )
 
         #------------------------------------------------------------#
 
