@@ -1,5 +1,6 @@
 import flame
-import laff
+from laff.matvec.trsv import trsv
+from laff.vecvec.dots import dots
 
 def chol_unb(A):
 
@@ -26,8 +27,8 @@ def chol_unb(A):
         # a21 -= A20 * np.transpose(a10t) #Not laff calls
         # laff.invscal( alpha11, a21 )
 
-        laff.trsv( 'Lower triangular', 'Nonunit diagonal', 'No transpose', A00, a10t )
-        laff.dots( a10t, a10t, alpha11 )
+        trsv( 'Lower triangular', 'Nonunit diagonal', 'No transpose', A00, a10t )
+        dots( a10t, a10t, alpha11 )
         alpha11[0,0] = np.sqrt( alpha11[0,0] )
 
         #------------------------------------------------------------#
