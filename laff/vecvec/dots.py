@@ -55,7 +55,7 @@ def dots(x, y, alpha ):
     elif n_x is 1 and m_y is 1: # x is a column, y is a row
         assert m_x == n_y, "laff.dots: size mismatch between x and y"
         if(type(alpha) is matrix):
-            for i in range(m_x): alpha += y[0, i] * x[i, 0]
+            for i in range(m_x): alpha[0,0] += y[0, i] * x[i, 0]
         else:
             for i in range(m_x): alpha += y[0, i] * x[i, 0]
             
