@@ -19,7 +19,7 @@ def invscal(alpha, x):
 
     m_x, n_x = x.shape
 
-    assert m_x is 1 or n_x is 1, "laff.scal: x is not a vector"
+    assert m_x is 1 or n_x is 1, "laff.invscal: x is not a vector"
 
     if m_x is 1: # x is a row
         for i in range(n_x): x[0, i] = x[0, i] / alpha[ 0,0 ]
